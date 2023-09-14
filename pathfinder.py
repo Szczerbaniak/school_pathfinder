@@ -85,33 +85,52 @@ def wasAlreadyMove(move):
 
 def createMove(current_position):
     possible_positions = possibleNextPositions(current_position)
+
     for possible_positon in possible_positions:
         if (wasAlreadyMove(possible_positon)):
             possible_positions.remove(possible_positon)
 
-    num_of_moves = len(possible_positions)
-    number_of_way = random.randrange(num_of_moves)
-    # print(possible_positions[number_of_way])
-    
+    num_of_new_moves = len(possible_positions)
+
+    if (num_of_new_moves == 0):
+        possible_positions = junctions[-1]
+        number_of_way = 0
+    else:
+        number_of_way = random.randrange(num_of_new_moves)
+
+
+
+    if (num_of_new_moves > 1):
+        junctions.append([position])
+        print("added junction")
+    else:
+        try:
+            junctions.remove([position])
+            print("removed junction")
+        except:
+            print("not junction")
+
     return possible_positions[number_of_way]
-    
+
 
 # print(possibleNextPositions(start_position))
 
-for i in range(13):
+while True:
     move = createMove(position)
+    print("m", move)
     traveled_maze[move[0]][move[1]] = "x"
 
     position = move
 
     # position = move(position)
-    print(i, position)
+    print(position)
 
     if (position == destination):
         print ("koniec")
         break
 # position = [7, 1]
-print(maze[position[0]][position[1]])
+# print(maze[position[0]][position[1]])
+print(junctions)
 
 
 # position = [2, 4]
